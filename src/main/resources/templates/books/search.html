@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search book</title>
+</head>
+<body>
+
+<a href="/books">Return to list</a>
+<br>
+<div>
+    <form th:method="POST" th:action="@{/books/search}">
+        <label for="search">Enter title: </label>
+        <input id="search" type="search" name="text">
+        <input type="submit" value="Search">
+    </form>
+</div>
+
+<div th:if="${books != null}">
+    <p th:if="${books.isEmpty()}">No books found</p>
+    <div th:unless="${books.isEmpty()}">
+        <div th:each="book : ${books}">
+            <hr>
+            <a th:href="@{/books/{id}(id=${book.id})}" th:text="${book.title} + ', ' + ${book.author} + ', ' + ${book.year}">Book</a>
+            <p th:if="${book.person}" th:text="'Book now with: ' + ${book.person.fullName}"></p>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>

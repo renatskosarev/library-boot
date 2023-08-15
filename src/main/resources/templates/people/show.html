@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${person.fullName}">Full name</title>
+</head>
+<body>
+
+<a href="/people">Return to list</a>
+
+<h1>Person</h1>
+<p th:text="${person.fullName} + ', ' + ${person.yearOfBirth}">Person info</p>
+
+<p th:if="${person.getBooks().isEmpty()}">The person has not yet taken a single book</p>
+<div th:unless="${person.getBooks().isEmpty()}">
+    <hr>
+    <p><b>Books:</b></p>
+    <div th:each="book : ${person.books}">
+        <a th:href="@{/books/{id}(id=${book.id})}"
+           th:text="${book.title} + ', ' + ${book.author} + ', ' + ${book.year}"></a>
+        <span style="color:red" th:if="${book.isExpired()}">[expired]</span>
+    </div>
+</div>
+
+<hr>
+
+<form th:method="GET" th:action="@{/people/{id}/edit(id=${person.id})}">
+    <input type="submit" value="Edit">
+</form>
+<form th:method="DELETE" th:action="@{/people/{id}(id=${person.id})}">
+    <input type="submit" value="Delete">
+</form>
+
+</body>
+</html>

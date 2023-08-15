@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Books</title>
+</head>
+<body>
+
+<h1>All books</h1>
+<div>
+    <a href="/books/search">Search</a>
+    <span> | </span>
+    Sorting by:
+    <a href="/books?page=0&sort=default">Default</a>
+    <a href="/books?page=0&sort=title">Title</a>
+    <a href="/books?page=0&sort=author">Author</a>
+    <a href="/books?page=0&sort=year">Year</a>
+</div>
+
+<hr>
+
+
+<div th:each="book : ${books}">
+    <a th:href="@{/books/{id}(id=${book.id})}"
+       th:text="${book.title} + ', ' + ${book.author} + ', ' + ${book.year}">Book</a>
+</div>
+
+<br>
+<a href="/books/new">Add new book</a>
+<hr>
+
+<div th:if="${totalPages > 0}">
+    <span th:each="pageNumber : ${#numbers.sequence(0, totalPages - 1)}">
+        <a th:href="@{/books(page=${pageNumber}, sort=${sort})}" th:text="${pageNumber + 1}"></a>
+    </span>
+</div>
+</body>
+</html>
